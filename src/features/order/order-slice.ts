@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { stat } from "fs";
 
 type room = {
   qty: number;
@@ -7,8 +8,8 @@ type room = {
 
 interface OrderState {
   userId: number | null;
-  start_date: Date;
-  end_date: Date;
+  start_date: Date | null;
+  end_date: Date | null;
   hotelId: number | null;
   twoBeds: room;
   threeBeds: room;
@@ -17,12 +18,10 @@ interface OrderState {
   totalPriceForNight: number;
 }
 
-const today = new Date();
-const twoDaysLater = new Date(today.setDate(today.getDate() + 2));
 const initialState: OrderState = {
   userId: null,
-  start_date: new Date(),
-  end_date: twoDaysLater,
+  start_date: null,
+  end_date: null,
   hotelId: null,
   twoBeds: {
     qty: 0,
@@ -100,8 +99,12 @@ const orderSlice = createSlice({
       state.threeBeds.qty = 0;
       state.twoBeds.qty = 0;
     },
-    initialDate(state, { payload }: PayloadAction<Date>): void {
-      state.start_date = payload;
+    getinitialDate(
+      state,
+      { payload }: PayloadAction<{ start: Date; end: Date }>
+    ) {
+      state.start_date = payload.start;
+      state.end_date = payload.end;
     },
   },
 });

@@ -1,10 +1,11 @@
 import TopBar from "./TopBar";
+import { lazy } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import LoginComponent from "./LoginComponent";
-import EntryPage from "./EntryPage";
-import HotelsPageComponent from "./HotelsPageComponent";
-import RoomComponent from "./RoomsComponent";
-import OrderPageComponent from "./OrderPageComponent";
+const LoginComponent = lazy(() => import("./LoginComponent"));
+const EntryPage = lazy(() => import("./EntryPage"));
+const HotelsPageComponent = lazy(() => import("./HotelsPageComponent"));
+const RoomComponent = lazy(() => import("./RoomsComponent"));
+const OrderPageComponent = lazy(() => import("./OrderPageComponent"));
 function Welcome() {
   return (
     <Router>

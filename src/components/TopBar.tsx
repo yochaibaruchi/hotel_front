@@ -12,7 +12,7 @@ function TopBar() {
         <Navbar bg="dark" variant="dark" expand="lg">
           <Container>
             <Navbar.Brand>
-              <h1>Hotel JRM</h1>
+              <h1>Hotel JLM</h1>
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
@@ -26,7 +26,7 @@ function TopBar() {
         <Navbar bg="dark" variant="dark">
           <Container>
             <Navbar.Brand>
-              <h1>Hotel JRM</h1>
+              <h1>Hotel JLM</h1>
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">

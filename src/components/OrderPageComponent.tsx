@@ -12,19 +12,37 @@ function OrderPageComponent() {
   const { hotelName } = useParams();
   const [rooms, setRooms] = useState<Row[]>([]);
   const order = useAppSelector((state) => state.order);
+
+  const startDate = useAppSelector((state) => state.order.start_date);
+  const endDate = useAppSelector((state) => state.order.end_date);
   const TAX_RATE = 0.17;
 
   function ccyFormat(num: number) {
     return `${num.toFixed(2)}`;
   }
-
-  function priceRow(qty: number, unit: number) {
-    return qty * unit;
+  function getDaysDiff(start: Date | null, end: Date | null): number {
+    if (start !== null && end !== null) {
+      {
+        const st = new Date(start);
+        const en = new Date(end);
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(st.getFullYear(), st.getMonth(), st.getDate());
+        const utc2 = Date.UTC(en.getFullYear(), en.getMonth(), en.getDate());
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+      }
+    } else {
+      return 1;
+    }
   }
 
-  function createRow(desc: string, qty: number, unit: number) {
-    const price = priceRow(qty, unit);
-    return { desc, qty, unit, price };
+  function priceRow(qty: number, unit: number, nights: number) {
+    return qty * unit * nights;
+  }
+
+  function createRow(desc: string, qty: number, unit: number, nights: number) {
+    const price = priceRow(qty, unit, nights);
+    return { desc, qty, unit, price, nights };
   }
 
   interface Row {
@@ -32,6 +50,7 @@ function OrderPageComponent() {
     qty: number;
     unit: number;
     price: number;
+    nights: number;
   }
 
   function subtotal(items: readonly Row[]) {
@@ -39,9 +58,24 @@ function OrderPageComponent() {
   }
 
   const rows = [
-    createRow(`2 beds room in ${hotelName}`, order.twoBeds.qty, 500),
-    createRow(`3 beds room in ${hotelName}`, order.threeBeds.qty, 750),
-    createRow(`4 beds room in ${hotelName}`, order.fourBeds.qty, 1000),
+    createRow(
+      `2 beds room in ${hotelName}`,
+      order.twoBeds.qty,
+      500,
+      getDaysDiff(startDate, endDate)
+    ),
+    createRow(
+      `3 beds room in ${hotelName}`,
+      order.threeBeds.qty,
+      750,
+      getDaysDiff(startDate, endDate)
+    ),
+    createRow(
+      `4 beds room in ${hotelName}`,
+      order.fourBeds.qty,
+      1000,
+      getDaysDiff(startDate, endDate)
+    ),
   ];
   useEffect(() => {
     const validRows = rows.filter((x: Row) => x.qty > 0);
@@ -65,6 +99,7 @@ function OrderPageComponent() {
             <TableCell>Desc</TableCell>
             <TableCell align="right">Qty.</TableCell>
             <TableCell align="right">Unit price</TableCell>
+            <TableCell align="right">nights</TableCell>
             <TableCell align="right">Sum</TableCell>
           </TableRow>
         </TableHead>
@@ -74,6 +109,7 @@ function OrderPageComponent() {
               <TableCell>{row.desc}</TableCell>
               <TableCell align="right">{row.qty}</TableCell>
               <TableCell align="right">{row.unit}</TableCell>
+              <TableCell align="right">{row.nights}</TableCell>
               <TableCell align="right">{ccyFormat(row.price)}</TableCell>
             </TableRow>
           ))}

@@ -8,9 +8,7 @@ function LoginCard() {
     >
       <Card.Body>
         <Card.Title>Login</Card.Title>
-        <Card.Text>
-          <LogIn />
-        </Card.Text>
+        <LogIn />
         <Card.Link href="#">to signin</Card.Link>
       </Card.Body>
     </Card>

@@ -1,16 +1,22 @@
 import { Button, Card } from "react-bootstrap";
 import Stack from "react-bootstrap/Stack";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../app/hooks";
 import { insertDateAndNumber } from "../features/order/order-slice";
 import { useNavigate } from "react-router-dom";
 function EntryPage() {
-  const start_date = useAppSelector((state) => state.order.start_date);
-  const end_date = useAppSelector((state) => state.order.end_date);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [number, setNumber] = useState(2);
+  const dispatch = useAppDispatch();
+  const [start, setStart] = useState<string>();
+  const [end, setEnd] = useState<string>();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const startDate = new Date();
+    setStart(startDate.toISOString().slice(0, 10));
+    const twoDaysAfter = startDate.setDate(startDate.getDate() + 2);
+    setEnd(new Date(twoDaysAfter).toISOString().slice(0, 10));
+  }, []);
   type hotelsSearch = {
     start_date: Date;
     end_date: Date;
@@ -54,7 +60,7 @@ function EntryPage() {
               <input
                 type={"date"}
                 className="input"
-                defaultValue={start_date.toISOString().slice(0, 10)}
+                defaultValue={start}
                 {...register("start_date", {
                   required: true,
                 })}
@@ -66,7 +72,7 @@ function EntryPage() {
             <div>
               <label>to</label> <br />
               <input
-                defaultValue={end_date.toISOString().slice(0, 10)}
+                defaultValue={end}
                 type={"date"}
                 className="input"
                 {...register("end_date", {
