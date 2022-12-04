@@ -4,6 +4,7 @@ import httpService from "../app/httpService";
 import HotelCard from "./HotelCard";
 import Stack from "react-bootstrap/Stack";
 import CarouselComponent from "./CarouselComponent";
+
 function HotelsPageComponent() {
   type hotel = {
     beds_left: number;

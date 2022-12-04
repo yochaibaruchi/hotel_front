@@ -12,7 +12,7 @@ type mapProps = {
 function Map(props: mapProps): JSX.Element {
   const { isLoaded } = useJsApiLoader({
     id: " google-map_id",
-    googleMapsApiKey: process.env.REACT_APP_MAP_KEY!,
+    googleMapsApiKey: "AIzaSyB57K30x-5CU9KKGoiaqoXOopmDMT4FpuI",
   });
 
   const mapRef = useRef<google.maps.Map | null>(null);

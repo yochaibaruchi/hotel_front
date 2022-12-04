@@ -85,6 +85,11 @@ class httpService {
       console.log(error);
     }
   }
+
+  async getMapKey() {
+    const { data } = await beforeLoginAxios.get<string>("/api/hotel/map");
+    return data;
+  }
 }
 
 export default httpService;

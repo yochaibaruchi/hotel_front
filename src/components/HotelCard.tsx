@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 import Stack from "react-bootstrap/Stack";
@@ -25,11 +25,11 @@ function HotelCard(props: hotel) {
   const dispatch = useAppDispatch();
   const [flag, setFlag] = useState(false);
   const [flag1, setFlag1] = useState(false);
+
   const onclick = () => {
     if (props.hotel_id !== lastHotelId) dispatch(changeHotelId(props.hotel_id));
     navigate("/rooms");
   };
-
   return (
     <Card
       className={"hotelCard"}
