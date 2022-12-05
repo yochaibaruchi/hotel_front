@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { useAppSelector } from "../app/hooks";
 import DropdownUser from "./DropDownUser";
 import LogInButton from "./LogInButton";
+import ChangeDatesbutton from "./ChangeDatesButton";
 function TopBar() {
   const isConected = useAppSelector((state) => state.user.isConected);
   const fullName = useAppSelector((state) => state.user.fullName);
@@ -16,6 +17,9 @@ function TopBar() {
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text style={{ marginRight: "15px" }}>
+                <ChangeDatesbutton />
+              </Navbar.Text>
               <Navbar.Text>
                 <DropdownUser name={fullName} />
               </Navbar.Text>

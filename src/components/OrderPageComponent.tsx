@@ -25,11 +25,10 @@ function OrderPageComponent() {
       {
         const st = new Date(start);
         const en = new Date(end);
-        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        const _MS_PER_DAY = 1000 * 3600 * 24;
         // Discard the time and time-zone information.
-        const utc1 = Date.UTC(st.getFullYear(), st.getMonth(), st.getDate());
-        const utc2 = Date.UTC(en.getFullYear(), en.getMonth(), en.getDate());
-        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+        let timediff = Math.abs(en.getTime() - st.getTime());
+        return Math.floor(timediff / _MS_PER_DAY);
       }
     } else {
       return 1;
@@ -86,52 +85,55 @@ function OrderPageComponent() {
   const invoiceTaxes = TAX_RATE * invoiceSubtotal;
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center" colSpan={3}>
-              Details
-            </TableCell>
-            <TableCell align="right">Price</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Desc</TableCell>
-            <TableCell align="right">Qty.</TableCell>
-            <TableCell align="right">Unit price</TableCell>
-            <TableCell align="right">nights</TableCell>
-            <TableCell align="right">Sum</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rooms.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
-              <TableCell align="right">{row.nights}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+    <div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={3}>
+                Details
+              </TableCell>
+              <TableCell align="right">Price</TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell rowSpan={3} />
-            <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Tax</TableCell>
-            <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-              0
-            )} %`}</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+            <TableRow>
+              <TableCell>Desc</TableCell>
+              <TableCell align="right">Qty.</TableCell>
+              <TableCell align="right">Unit price</TableCell>
+              <TableCell align="right">nights</TableCell>
+              <TableCell align="right">Sum</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rooms.map((row) => (
+              <TableRow key={row.desc}>
+                <TableCell>{row.desc}</TableCell>
+                <TableCell align="right">{row.qty}</TableCell>
+                <TableCell align="right">{row.unit}</TableCell>
+                <TableCell align="right">{row.nights}</TableCell>
+                <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell rowSpan={3} />
+              <TableCell colSpan={2}>Subtotal</TableCell>
+              <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Tax</TableCell>
+              <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+                0
+              )} %`}</TableCell>
+              <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div></div>
+    </div>
   );
 }
 
