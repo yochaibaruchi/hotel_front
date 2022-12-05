@@ -32,7 +32,7 @@ function LogIn() {
         })
       );
       dispatch(AddUserId(data.user.id));
-      sessionStorage.setItem("key", data.token);
+      sessionStorage.setItem("token", data.token);
       navigate(-1);
     } else {
       alert(data?.message);

@@ -34,7 +34,6 @@ const RoomComponent = () => {
       let http = new httpService();
       const data = await http.getRooms(startDate, endDate, hotelId);
       setRooms(data);
-      console.log(data);
     };
     getRooms();
   }, [hotelId, startDate, endDate]);
