@@ -1,9 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import httpService from "../app/httpService";
+type data = {
+  full_name: string;
+  hotel_address: string;
+};
 const ReservationComponent = () => {
   const { orderId } = useParams();
-
+  const [reservation, setReservation] = useState();
   useEffect(() => {
     const getReservation = async () => {
       const http = new httpService();
