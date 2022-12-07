@@ -1,11 +1,12 @@
-import { beforeLoginAxios } from "./axios";
-
+import { beforeLoginAxios, afterLoginAxios } from "./axios";
+import axios from "axios";
 type room = {
   hotelId: number;
   room_capacity: number;
   image_url: string;
   hotel_name: string;
 };
+type reservation = {};
 
 type roomsData = {
   data: room[];
@@ -86,9 +87,75 @@ class httpService {
     }
   }
 
-  async getMapKey() {
-    const { data } = await beforeLoginAxios.get<string>("/api/hotel/map");
-    return data;
+  async order(
+    userId: Number,
+    startDate: Date,
+    endDate: Date,
+    hotelId: Number,
+    NumberOfRoom2: Number,
+    NumberOfRoom3: Number,
+    NumberOfRoom4: Number
+  ) {
+    try {
+      // const rawResponse = await fetch(
+      //   "http://nodehotel-env.eba-j2swbhjm.eu-central-1.elasticbeanstalk.com/api/hotel/order",
+      //   {
+      //     method: "POST",
+      //     mode: "cors",
+      //     headers: {
+      //       Accept: "application/json",
+      //       "Content-Type": "application/json",
+      //       Authorization: token,
+      //     },
+      //     body: JSON.stringify({
+      //       userId: userId,
+      //       startDate: startDate,
+      //       endDate: endDate,
+      //       hotelId: hotelId,
+      //       NumberOfRoom2: NumberOfRoom2,
+      //       NumberOfRoom3: NumberOfRoom3,
+      //       NumberOfRoom4: NumberOfRoom4,
+      //     }),
+      //   }
+      // );
+      // const content = await rawResponse.json();
+      // return content;
+
+      const response = await afterLoginAxios.post<{
+        data: number;
+        auth: boolean;
+      }>("/api/hotel/order", {
+        userId: userId,
+        startDate: startDate,
+        endDate: endDate,
+        hotelId: hotelId,
+        NumberOfRoom2: NumberOfRoom2,
+        NumberOfRoom3: NumberOfRoom3,
+        NumberOfRoom4: NumberOfRoom4,
+      });
+
+      if (response.status === 200) return response.data;
+      alert("somthing wrong happend");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async reservation(order_id: number) {
+    const response = await afterLoginAxios.get<{
+      full_name: string;
+      hotel_address: string;
+      hotel_location_Latitude: GLfloat;
+      hotel_location_Longitude: GLfloat;
+      hotel_name: string;
+      hotel_rating: GLfloat;
+      order_date: Date;
+      order_id: number;
+      rent_end_date: Date;
+      rent_start_date: Date;
+      user_email: string;
+    }>(`/api/hotel/reservation/${order_id}`);
+    if (response.status === 200) return response.data;
   }
 }
 

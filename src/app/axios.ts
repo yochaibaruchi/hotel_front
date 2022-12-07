@@ -1,19 +1,18 @@
 import axios from "axios";
-const token = sessionStorage["token"];
 
 export const beforeLoginAxios = axios.create({
-  baseURL:
-    "http://nodehotel-env.eba-j2swbhjm.eu-central-1.elasticbeanstalk.com",
+  baseURL: "https://https://hotelapidemo.com",
   responseType: "json",
   timeout: 30000,
 });
 
+const token = sessionStorage["token"];
 export const afterLoginAxios = axios.create({
-  baseURL:
-    "http://nodehotel-env.eba-j2swbhjm.eu-central-1.elasticbeanstalk.com",
+  baseURL: "https://https://hotelapidemo.com",
+
   responseType: "json",
   timeout: 30000,
   headers: {
-    "x-access-token": token,
+    Authorization: token,
   },
 });

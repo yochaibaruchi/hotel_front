@@ -8,13 +8,40 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Button from "react-bootstrap/esm/Button";
+import httpService from "../app/httpService";
+import { useNavigate } from "react-router-dom";
 function OrderPageComponent() {
   const { hotelName } = useParams();
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState<Row[]>([]);
   const order = useAppSelector((state) => state.order);
-
+  const user_id = useAppSelector((state) => state.user.id);
   const startDate = useAppSelector((state) => state.order.start_date);
   const endDate = useAppSelector((state) => state.order.end_date);
+  const orderButton = async () => {
+    const http = new httpService();
+    if (
+      user_id !== null &&
+      startDate !== null &&
+      endDate !== null &&
+      order.hotelId !== null
+    ) {
+      const data = await http.order(
+        user_id,
+        startDate,
+        endDate,
+        order.hotelId,
+        order.twoBeds.qty,
+        order.threeBeds.qty,
+        order.fourBeds.qty
+      );
+      if (data !== undefined) {
+        console.log(data);
+        navigate(`/reservation/${data.data}`);
+      }
+    } else console.log("sdfghjkl");
+  };
   const TAX_RATE = 0.17;
 
   function ccyFormat(num: number) {
@@ -132,7 +159,11 @@ function OrderPageComponent() {
           </TableBody>
         </Table>
       </TableContainer>
-      <div></div>
+      <div className="d-grid gap-2">
+        <Button onClick={orderButton} variant="dark" size="lg">
+          Confirm and Order
+        </Button>
+      </div>
     </div>
   );
 }

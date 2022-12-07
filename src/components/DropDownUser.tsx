@@ -7,6 +7,7 @@ interface props {
 function DropdownUser({ name }: props) {
   const hotelId = useAppSelector((state) => state.order.hotelId);
   return (
+    //finish drop down
     <div>
       <NavDropdown
         id="nav-dropdown-dark-example"
