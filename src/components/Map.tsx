@@ -7,7 +7,6 @@ type mapProps = {
   lat: number;
   lng: number;
   hotelName: string;
-  flag: boolean;
 };
 function Map(props: mapProps): JSX.Element {
   const { isLoaded } = useJsApiLoader({
@@ -28,11 +27,6 @@ function Map(props: mapProps): JSX.Element {
     width: "24rem",
     height: "26vh",
   };
-  const containerStyleHover = {
-    width: "24rem",
-    height: "26vh",
-  };
-
   const options = {
     styles: mapStyle,
     disableDefaultUI: true,
@@ -44,7 +38,7 @@ function Map(props: mapProps): JSX.Element {
     return (
       <Card>
         <GoogleMap
-          mapContainerStyle={props.flag ? containerStyleHover : containerStyle}
+          mapContainerStyle={containerStyle}
           options={options as google.maps.MapOptions}
           center={new google.maps.LatLng(props.lat, props.lng)}
           zoom={15}
