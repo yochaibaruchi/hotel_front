@@ -51,11 +51,11 @@ const RoomComponent = () => {
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip}
           >
-            <Button variant="dark">order</Button>
+            <Button variant="dark">New order</Button>
           </OverlayTrigger>
         ) : (
           <Button onClick={nav} variant="dark">
-            order
+            New order
           </Button>
         )}
 

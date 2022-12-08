@@ -34,6 +34,9 @@ function TopBar() {
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text style={{ marginRight: "15px" }}>
+                <ChangeDatesbutton />
+              </Navbar.Text>
               <Navbar.Text>
                 <LogInButton></LogInButton>
               </Navbar.Text>
