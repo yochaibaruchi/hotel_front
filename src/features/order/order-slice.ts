@@ -16,6 +16,7 @@ interface OrderState {
   fourBeds: room;
   numberOfPeople: number;
   totalPriceForNight: number;
+  ordered: boolean;
 }
 
 const initialState: OrderState = {
@@ -37,6 +38,7 @@ const initialState: OrderState = {
   },
   numberOfPeople: 2,
   totalPriceForNight: 0,
+  ordered: false,
 };
 
 const orderSlice = createSlice({
@@ -106,6 +108,12 @@ const orderSlice = createSlice({
       state.start_date = payload.start;
       state.end_date = payload.end;
     },
+    onOrder(state) {
+      state.ordered = true;
+    },
+    newOrder(state) {
+      state.ordered = false;
+    },
   },
 });
 
@@ -113,6 +121,8 @@ export const {
   increase,
   Descend,
   insertDateAndNumber,
+  onOrder,
+  newOrder,
   changeHotelId,
   AddUserId,
 } = orderSlice.actions;

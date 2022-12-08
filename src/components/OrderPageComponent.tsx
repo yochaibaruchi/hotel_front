@@ -1,4 +1,4 @@
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import httpService from "../app/httpService";
 import { useNavigate } from "react-router-dom";
+import { onOrder } from "../features/order/order-slice";
 function OrderPageComponent() {
   const { hotelName } = useParams();
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function OrderPageComponent() {
   const user_id = useAppSelector((state) => state.user.id);
   const startDate = useAppSelector((state) => state.order.start_date);
   const endDate = useAppSelector((state) => state.order.end_date);
+  const dispatch = useAppDispatch();
   const orderButton = async () => {
     const http = new httpService();
     if (
@@ -37,10 +39,10 @@ function OrderPageComponent() {
         order.fourBeds.qty
       );
       if (data !== undefined) {
-        console.log(data);
-        navigate(`/reservation/${data.data}`);
+        dispatch(onOrder());
+        navigate(`/reservation/${data.data}/${invoiceTotal}`);
       }
-    } else console.log("sdfghjkl");
+    } else console.log("problem importing data");
   };
   const TAX_RATE = 0.17;
 

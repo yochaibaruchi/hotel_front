@@ -39,10 +39,14 @@ const userSlice = createSlice({
       state.mail = payload.mail;
     },
     logOut(state): void {
-      state = initialState;
+      state.country = null;
+      state.fullName = null;
+      state.isConected = false;
+      state.id = null;
+      state.mail = null;
     },
   },
 });
 
-export const { isConected } = userSlice.actions;
+export const { isConected, logOut } = userSlice.actions;
 export default userSlice.reducer;

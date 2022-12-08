@@ -17,7 +17,10 @@ function Welcome() {
         <Route path="/login" element={<LoginComponent />} />
         <Route path="/rooms" element={<RoomComponent />} />
         <Route path="/order/:hotelName" element={<OrderPageComponent />} />
-        <Route path="reservation/:orderId" element={<ReservationComponent />} />
+        <Route
+          path="reservation/:orderId/:invoiceTotal"
+          element={<ReservationComponent />}
+        />
       </Routes>
     </Router>
   );

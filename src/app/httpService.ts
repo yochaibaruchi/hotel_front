@@ -141,7 +141,7 @@ class httpService {
     }
   }
 
-  async reservation(order_id: number) {
+  async reservation(order_id: string) {
     const response = await afterLoginAxios.get<{
       full_name: string;
       hotel_address: string;
