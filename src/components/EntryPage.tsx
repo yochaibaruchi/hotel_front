@@ -1,5 +1,4 @@
 import { Button, Card } from "react-bootstrap";
-import Stack from "react-bootstrap/Stack";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
@@ -53,8 +52,15 @@ function EntryPage() {
         <Card.Text style={{ textAlign: "center" }}>
           just an easier way to book your next vacation...
         </Card.Text>
-        <form style={{ marginLeft: "30%" }} onSubmit={handleSubmit(onSubmit)}>
-          <Stack style={{ textAlign: "center" }} direction="horizontal" gap={5}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div
+            style={{
+              textAlign: "center",
+              display: "flex",
+              gap: 15,
+              justifyContent: "center",
+            }}
+          >
             <div>
               <label>from</label> <br />
               <input
@@ -83,9 +89,9 @@ function EntryPage() {
                 <span className="p">This field is required</span>
               )}{" "}
             </div>
-            <div style={{ textAlign: "center" }}>
-              <label>people</label>
-              <Stack direction="horizontal" gap={2}>
+            <div>
+              <label>people</label> <br />
+              <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
                 <Button
                   disabled={number <= 2}
                   onClick={() =>
@@ -106,10 +112,10 @@ function EntryPage() {
                 >
                   +
                 </Button>
-              </Stack>
+              </div>
             </div>
             <input type={"submit"} />
-          </Stack>
+          </div>
         </form>
         <p style={{ marginTop: "25%", textAlign: "center" }}>
           This is a demo application for booking. application built with
