@@ -1,12 +1,18 @@
 import { beforeLoginAxios, afterLoginAxios } from "./axios";
-import axios from "axios";
 type room = {
   hotelId: number;
   room_capacity: number;
   image_url: string;
   hotel_name: string;
 };
-type reservation = {};
+type signUp = {
+  first_name: string;
+  last_name: string;
+  user_email: string;
+  user_password: string;
+  password_check: string;
+  user_country: string;
+};
 
 type roomsData = {
   data: room[];
@@ -134,8 +140,9 @@ class httpService {
         NumberOfRoom4: NumberOfRoom4,
       });
 
-      if (response.status === 200) return response.data;
-      alert("somthing wrong happend");
+      if (response.status === 201) return response.data;
+      if (response.status === 200)
+        alert("somthing wrong happend,login again if you wish to proceed");
     } catch (err) {
       console.log(err);
     }
@@ -156,6 +163,23 @@ class httpService {
       user_email: string;
     }>(`/api/hotel/reservation/${order_id}`);
     if (response.status === 200) return response.data;
+  }
+
+  async signUp(userData: signUp) {
+    const response = await beforeLoginAxios.post("/api/user/signIn", {
+      first_name: userData.first_name,
+      last_name: userData.last_name,
+      user_email: userData.user_email,
+      user_password: userData.user_password,
+      user_country: userData.user_country,
+    });
+    return response;
+
+    // if (response.status === 200) {
+    //   return response.data;
+    // } else {
+    //   return "something went wrong";
+    // }
   }
 }
 

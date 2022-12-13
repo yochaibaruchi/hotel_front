@@ -8,7 +8,7 @@ interface props {
 }
 
 function DropdownUser({ name }: props) {
-  const hotelId = useAppSelector((state) => state.order.hotelId);
+  const isConected = useAppSelector((state) => state.user.isConected);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,8 +31,8 @@ function DropdownUser({ name }: props) {
         menuVariant="dark"
       >
         <NavDropdown.Item>profile</NavDropdown.Item>
-        <NavDropdown.Item disabled={hotelId === null}>
-          back into
+        <NavDropdown.Item disabled={isConected === false}>
+          My orders
         </NavDropdown.Item>
         <NavDropdown.Item
           onClick={() => {

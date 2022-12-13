@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
 
 type room = {
   qty: number;
@@ -100,6 +99,7 @@ const orderSlice = createSlice({
       state.fourBeds.qty = 0;
       state.threeBeds.qty = 0;
       state.twoBeds.qty = 0;
+      state.totalPriceForNight = 0;
     },
     getinitialDate(
       state,

@@ -72,7 +72,7 @@ function EntryPage() {
                 })}
               />
               {errors?.start_date?.type === "required" && (
-                <span className="p">This field is required</span>
+                <span className="p">This field is required!</span>
               )}{" "}
             </div>
             <div>
@@ -86,7 +86,7 @@ function EntryPage() {
                 })}
               />
               {errors?.end_date?.type === "required" && (
-                <span className="p">This field is required</span>
+                <span className="p">This field is required!</span>
               )}{" "}
             </div>
             <div>

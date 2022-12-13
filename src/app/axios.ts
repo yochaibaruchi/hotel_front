@@ -10,8 +10,6 @@ const token = sessionStorage["token"];
 export const afterLoginAxios = axios.create({
   baseURL: "https://hotelapidemo.com",
   headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
     "x-access-token": token,
   },
 });
