@@ -12,9 +12,17 @@ import Button from "react-bootstrap/esm/Button";
 import httpService from "../app/httpService";
 import { useNavigate } from "react-router-dom";
 import { onOrder } from "../features/order/order-slice";
+import { isExpired } from "react-jwt";
 function OrderPageComponent() {
   const { hotelName } = useParams();
   const navigate = useNavigate();
+  useEffect(() => {
+    const token = sessionStorage["token"];
+    if (isExpired(token)) {
+      alert("you need to login to proceed");
+      navigate("/login");
+    }
+  }, []);
   const [rooms, setRooms] = useState<Row[]>([]);
   const order = useAppSelector((state) => state.order);
   const user_id = useAppSelector((state) => state.user.id);
@@ -38,6 +46,10 @@ function OrderPageComponent() {
         order.threeBeds.qty,
         order.fourBeds.qty
       );
+      if (!data?.auth) {
+        alert("you need to login again");
+        navigate("/login");
+      }
       if (data !== undefined) {
         dispatch(onOrder());
         navigate(`/reservation/${data.data}/${invoiceTotal}`);

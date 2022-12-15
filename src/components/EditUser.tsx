@@ -1,22 +1,25 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import LoginCard from "./LoginCard";
+import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/esm/Row";
 import Image from "react-bootstrap/Image";
-import { useAppSelector } from "../app/hooks";
+import Container from "react-bootstrap/Container";
+import UpdateUserCard from "./UpdateUserCard";
+import { isExpired } from "react-jwt";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-function LoginComponent() {
+function EditUser() {
   const navigate = useNavigate();
-  const isConected = useAppSelector((state) => state.user.isConected);
   useEffect(() => {
-    if (isConected) navigate(-2);
-  });
+    const token = sessionStorage["token"];
+    if (isExpired(token)) {
+      alert("you need to login to proceed");
+      navigate("/login");
+    }
+  }, []);
   return (
     <Container>
       <Row>
         <Col>
-          <LoginCard />
+          <UpdateUserCard />
         </Col>
         <Col>
           <Image
@@ -30,4 +33,4 @@ function LoginComponent() {
   );
 }
 
-export default LoginComponent;
+export default EditUser;

@@ -30,8 +30,13 @@ function DropdownUser({ name }: props) {
         title={name}
         menuVariant="dark"
       >
-        <NavDropdown.Item>profile</NavDropdown.Item>
-        <NavDropdown.Item disabled={isConected === false}>
+        <NavDropdown.Item onClick={() => navigate("/EditUser")}>
+          Edit profile
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          onClick={() => navigate("/userReservations")}
+          disabled={isConected === false}
+        >
           My orders
         </NavDropdown.Item>
         <NavDropdown.Item

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import httpService from "../app/httpService";
 import { useAppSelector } from "../app/hooks";
 import Table from "react-bootstrap/esm/Table";
+import { isExpired } from "react-jwt";
+import { useNavigate } from "react-router-dom";
 type data = {
   full_name: string;
   hotel_address: string;
@@ -17,6 +19,14 @@ type data = {
   user_email: string;
 };
 const ReservationComponent = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = sessionStorage["token"];
+    if (isExpired(token)) {
+      alert("you need to login to proceed");
+      navigate("/login");
+    }
+  }, []);
   const twoBeds = useAppSelector((state) => state.order.twoBeds.qty);
   const threeBeds = useAppSelector((state) => state.order.threeBeds.qty);
   const fourBeds = useAppSelector((state) => state.order.fourBeds.qty);

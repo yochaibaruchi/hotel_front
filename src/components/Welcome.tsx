@@ -8,6 +8,8 @@ const RoomComponent = lazy(() => import("./RoomsComponent"));
 const OrderPageComponent = lazy(() => import("./OrderPageComponent"));
 const ReservationComponent = lazy(() => import("./ReservationComponent"));
 const SignUp = lazy(() => import("./SignUp"));
+const UserReservations = lazy(() => import("./UserReservations"));
+const EditUser = lazy(() => import("./EditUser"));
 function Welcome() {
   return (
     <Router>
@@ -23,6 +25,8 @@ function Welcome() {
           element={<ReservationComponent />}
         />
         <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/userReservations" element={<UserReservations />} />
+        <Route path="/EditUser" element={<EditUser />} />
       </Routes>
     </Router>
   );

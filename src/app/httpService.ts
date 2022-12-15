@@ -1,4 +1,6 @@
-import { beforeLoginAxios, afterLoginAxios } from "./axios";
+import axios from "axios";
+import { beforeLoginAxios } from "./axios";
+
 type room = {
   hotelId: number;
   room_capacity: number;
@@ -14,6 +16,27 @@ type signUp = {
   user_country: string;
 };
 
+type reservation = {
+  full_name: string;
+  hotel_address: string;
+  hotel_location_Latitude: GLfloat;
+  hotel_location_Longitude: GLfloat;
+  hotel_name: string;
+  hotel_rating: GLfloat;
+  order_date: Date;
+  order_id: number;
+  rent_end_date: Date;
+  rent_start_date: Date;
+  user_email: string;
+};
+type update = {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  country: string;
+};
 type roomsData = {
   data: room[];
 };
@@ -126,7 +149,13 @@ class httpService {
       // );
       // const content = await rawResponse.json();
       // return content;
-
+      const token = sessionStorage["token"];
+      const afterLoginAxios = axios.create({
+        baseURL: "https://hotelapidemo.com",
+        headers: {
+          "x-access-token": token,
+        },
+      });
       const response = await afterLoginAxios.post<{
         data: number;
         auth: boolean;
@@ -149,19 +178,16 @@ class httpService {
   }
 
   async reservation(order_id: string) {
-    const response = await afterLoginAxios.get<{
-      full_name: string;
-      hotel_address: string;
-      hotel_location_Latitude: GLfloat;
-      hotel_location_Longitude: GLfloat;
-      hotel_name: string;
-      hotel_rating: GLfloat;
-      order_date: Date;
-      order_id: number;
-      rent_end_date: Date;
-      rent_start_date: Date;
-      user_email: string;
-    }>(`/api/hotel/reservation/${order_id}`);
+    const token = sessionStorage["token"];
+    const afterLoginAxios = axios.create({
+      baseURL: "https://hotelapidemo.com",
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    const response = await afterLoginAxios.get<reservation>(
+      `/api/hotel/reservation/${order_id}`
+    );
     if (response.status === 200) return response.data;
   }
 
@@ -174,12 +200,39 @@ class httpService {
       user_country: userData.user_country,
     });
     return response;
+  }
+  async getUserReservations(userId: number) {
+    const token = sessionStorage["token"];
+    const afterLoginAxios = axios.create({
+      baseURL: "https://hotelapidemo.com",
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    const response = await afterLoginAxios.get(
+      `/api/user/reservations/${userId}`
+    );
+    if (response.data === false) {
+      alert("you need to login to proceed");
+    }
+    if (response.status === 200) return response.data;
+  }
 
-    // if (response.status === 200) {
-    //   return response.data;
-    // } else {
-    //   return "something went wrong";
-    // }
+  async updateUser(user: update) {
+    const token = sessionStorage["token"];
+    const afterLoginAxios = axios.create({
+      baseURL: "https://hotelapidemo.com",
+      headers: {
+        "x-access-token": token,
+      },
+    });
+    console.log(user);
+    try {
+      const response = await afterLoginAxios.put("/api/user/update", user);
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
