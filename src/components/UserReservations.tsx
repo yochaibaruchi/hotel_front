@@ -16,6 +16,8 @@ type reservation = {
   rent_start_date: Date;
   rent_end_date: Date;
   user_email: string;
+  room_capacity: number;
+  room_count: string;
 };
 
 const UserReservations = () => {
@@ -45,10 +47,10 @@ const UserReservations = () => {
 
   return (
     <div>
-      {res?.map((reservation) => {
+      {res?.map((reservation, index) => {
         return (
           <ReservationPropsComponent
-            key={reservation.order_id}
+            key={index}
             hotel_address={reservation.hotel_address}
             user_email={reservation.user_email}
             full_name={reservation.full_name}
@@ -60,6 +62,8 @@ const UserReservations = () => {
             order_id={reservation.order_id}
             rent_end_date={reservation.rent_end_date}
             rent_start_date={reservation.rent_start_date}
+            room_capacity={reservation.room_capacity}
+            room_count={reservation.room_count}
           />
         );
       })}

@@ -11,6 +11,8 @@ type data = {
   rent_start_date: Date;
   rent_end_date: Date;
   user_email: string;
+  room_capacity: number;
+  room_count: string;
 };
 const ReservationPropsComponent = (props: data) => {
   const rent_end_date = new Date(props.rent_end_date);
@@ -41,6 +43,20 @@ const ReservationPropsComponent = (props: data) => {
             <td>{rent_start_date.toDateString()}</td>
             <td>{rent_end_date.toDateString()}</td>
             <td>{props?.user_email}</td>
+          </tr>
+        </tbody>
+      </Table>
+      <Table>
+        <thead>
+          <tr>
+            <th>room type</th>
+            <th>qty</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{props.room_capacity} beds room</td>
+            <td>{props.room_count}</td>
           </tr>
         </tbody>
       </Table>
