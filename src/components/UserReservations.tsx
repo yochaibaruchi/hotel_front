@@ -21,9 +21,10 @@ type reservation = {
 };
 
 const UserReservations = () => {
+  const isConected = useAppSelector((state) => state.user.isConected);
   const navigate = useNavigate();
   const userId = useAppSelector((state) => state.user.id);
-  const [res, setRes] = useState<reservation[]>();
+  const [res, setRes] = useState<reservation[]>([]);
   useEffect(() => {
     const token = sessionStorage["token"];
     if (isExpired(token)) {
@@ -43,9 +44,9 @@ const UserReservations = () => {
         getData(userId);
       }
     }
-  }, []);
+  }, [isConected]);
 
-  return (
+  return res?.length > 0 ? (
     <div>
       {res?.map((reservation, index) => {
         return (
@@ -68,6 +69,8 @@ const UserReservations = () => {
         );
       })}
     </div>
+  ) : (
+    <h1 style={{ textAlign: "center" }}>Hurry and place your first order..</h1>
   );
 };
 

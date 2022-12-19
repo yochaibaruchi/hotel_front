@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { insertDateAndNumber } from "../features/order/order-slice";
 import { useNavigate } from "react-router-dom";
-import { decodeToken, isExpired } from "react-jwt";
 function EntryPage() {
   const [number, setNumber] = useState(2);
   const dispatch = useAppDispatch();

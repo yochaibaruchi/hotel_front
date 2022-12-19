@@ -6,15 +6,17 @@ import UpdateUserCard from "./UpdateUserCard";
 import { isExpired } from "react-jwt";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
 function EditUser() {
   const navigate = useNavigate();
+  const isConected = useAppSelector((state) => state.user.isConected);
   useEffect(() => {
     const token = sessionStorage["token"];
     if (isExpired(token)) {
       alert("you need to login to proceed");
       navigate("/login");
     }
-  }, []);
+  }, [isConected]);
   return (
     <Container>
       <Row>

@@ -19,6 +19,7 @@ type data = {
   user_email: string;
 };
 const ReservationComponent = () => {
+  const isConected = useAppSelector((state) => state.user.isConected);
   const navigate = useNavigate();
   useEffect(() => {
     const token = sessionStorage["token"];
@@ -26,7 +27,7 @@ const ReservationComponent = () => {
       alert("you need to login to proceed");
       navigate("/login");
     }
-  }, []);
+  }, [isConected]);
   const twoBeds = useAppSelector((state) => state.order.twoBeds.qty);
   const threeBeds = useAppSelector((state) => state.order.threeBeds.qty);
   const fourBeds = useAppSelector((state) => state.order.fourBeds.qty);

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { onOrder } from "../features/order/order-slice";
 import { isExpired } from "react-jwt";
 function OrderPageComponent() {
+  const isConected = useAppSelector((state) => state.user.isConected);
   const { hotelName } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -118,9 +119,15 @@ function OrderPageComponent() {
     ),
   ];
   useEffect(() => {
-    const validRows = rows.filter((x: Row) => x.qty > 0);
-    setRooms(validRows);
-  }, []);
+    const token = sessionStorage["token"];
+    if (isExpired(token)) {
+      alert("you need to login to proceed");
+      navigate("/login");
+    } else {
+      const validRows = rows.filter((x: Row) => x.qty > 0);
+      setRooms(validRows);
+    }
+  }, [isConected]);
 
   const invoiceSubtotal = subtotal(rows);
   const invoiceTaxes = TAX_RATE * invoiceSubtotal;
