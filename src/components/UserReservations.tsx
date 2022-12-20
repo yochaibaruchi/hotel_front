@@ -34,8 +34,6 @@ const UserReservations = () => {
       const getData = async (id: number) => {
         let http = new httpService();
         const response = await http.getUserReservations(id);
-
-        console.log(response);
         if (response !== undefined) {
           setRes(response);
         }
@@ -48,10 +46,10 @@ const UserReservations = () => {
 
   return res?.length > 0 ? (
     <div>
-      {res?.map((reservation, index) => {
+      {res?.map((reservation) => {
         return (
           <ReservationPropsComponent
-            key={index}
+            key={reservation.room_capacity + reservation.order_id}
             hotel_address={reservation.hotel_address}
             user_email={reservation.user_email}
             full_name={reservation.full_name}
